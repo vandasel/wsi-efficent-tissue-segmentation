@@ -23,6 +23,8 @@ from monai.transforms import (
     RandHistogramShiftd, RandGaussianSmoothd, 
     AsDiscrete, Lambdad
 )
+from optuna.study import MaxTrialsCallback
+from optuna.trial import TrialState
 
 # from torch.utils.tensorboard import SummaryWriter
 
@@ -255,7 +257,7 @@ def main(cfg: DictConfig):
       
         return best_metric
 
-    pruner = optuna.pruners.HyperbandPruner(min_resource=2, max_resource=10, reduction_factor=3)
+    pruner = optuna.pruners.HyperbandPruner(min_resource=6, max_resource=cfg.training.max_epochs, reduction_factor=3)
     study_name = f"tune_{cfg.model.type}_{cfg.dataset.patch_size}"
     storage_name = f"sqlite:///{os.path.join(OUTPUT_DIR, study_name)}.db"
     
@@ -266,7 +268,13 @@ def main(cfg: DictConfig):
         direction="maximize", 
         pruner=pruner
     )
-    study.optimize(objective, n_trials=cfg.training.n_trials)
+    study.optimize(
+        objective, 
+        callbacks=[MaxTrialsCallback(
+            cfg.training.n_trials, 
+            states=(TrialState.COMPLETE, TrialState.PRUNED)
+        )]
+    )
     print("Best params:", study.best_trial.params)
     print("Best val value:", study.best_value)
 
