@@ -1,9 +1,9 @@
 # WSI Efficient Tissue Segmentation
 
 A deep-learning pipeline for segmenting tumor, stroma, and
-lymphocyte regions in whole-slide breast cancer
+lymphocyte regions in whole-slide cancer
 histopathology images, built on the [TIGER challenge](https://tiger.grand-challenge.org/)
-dataset.
+dataset. 
 
 The pipeline covers artifact filtering and patch extraction, Vahadane stain
 normalization, lymphocyte mask refinement, training, Optuna-based
