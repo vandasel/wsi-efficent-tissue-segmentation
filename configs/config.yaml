@@ -1,0 +1,49 @@
+dataset:
+  base_dir: /mnt/Data/jwandas/Code/dataset_patches
+  patch_size: 512
+  overlap: 0.5
+
+training:
+  max_epochs: 120
+  batch_size: 24
+  num_workers: 8
+  patience: 40
+  num_sampler: 1500
+  tmax: 120
+  accum: 1
+
+model:
+  type: AttentionUnet
+  lr: 5e-05
+  weight_decay: 0.005
+  channels: [32, 64, 128, 256, 512]
+  embed_dims: [128, 160, 256]
+  feat_size: [16, 32, 64, 128]
+  hidden_size: 128
+  depths: [2, 2, 2, 2]
+  dropout: 0.3
+  drop_path_rate: 0.3
+  features: [64, 128, 256, 512]
+
+ablation:
+  use_vahadane: True
+  use_new_masks: True
+  use_augs: True
+  use_sampler: True
+  loss_type: "dice_ce"
+  tversky_alpha: 0.5
+  tversky_beta: 0.5
+
+optuna:
+  n_trials: 300
+  timeout_seconds: 259200
+  max_epochs: 100
+  patience: 12
+  num_sampler: 1500
+  lr_range: [0.00005, 0.008]
+  wd_range: [0.000005, 0.02]
+  width_mult_choices: [0.5, 0.75, 1.0]
+  study_name: tune_AttentionUnet_optuna_v2    
+  hyperband_min_resource: 15
+  hyperband_reduction_factor: 3
+  wsi_subset_frac: 1.0

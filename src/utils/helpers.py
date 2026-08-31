@@ -25,3 +25,34 @@ class EarlyStopping:
             self.stop_training = True
             if self.verbose:
                 print(f"EARLY STOPPING -> No improvement for {self.patience} epochs.")
+
+
+
+import os
+import random
+from monai.transforms import MapTransform
+
+class RandomStainStyleD(MapTransform):
+    """
+    Claas that draws different cohort at each epoch for more generalization, forces model to ignore colors ->
+    better understand the biological structure.
+    """
+    def __init__(self, keys):
+        super().__init__(keys)
+        self.styles = ["", "_pink", "_purple", "_median"]
+
+    def __call__(self, data):
+        d = dict(data)
+        chosen_style = random.choice(self.styles)
+        
+        test_path = d[self.keys[0]].replace(".png", f"{chosen_style}.png")
+        
+        if not os.path.exists(test_path):
+            chosen_style = ""
+
+        for key in self.keys:
+            original_path = d[key]
+            new_path = original_path.replace(".png", f"{chosen_style}.png")
+            d[key] = new_path
+            
+        return d
