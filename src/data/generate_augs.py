@@ -23,7 +23,7 @@ MASKS_OUT_PATH = os.path.join(OUTPUT_DIR, "masks_aug")
 IMAGES_IN_PATH = os.path.join(OUTPUT_DIR, "images")
 IMAGES_OUT_PATH = os.path.join(OUTPUT_DIR, "images_aug")
 
-STYLES = ["median"]
+STYLES = ["median","pink", "purple"]
 
 TARGET_FILES = {
     "pink": "TCGA-EW-A1P1-01Z-00-DX1.4B670029-4B3B-4D76-8EA4-F4F29EEF9E37_x26376_y19709.png",
