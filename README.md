@@ -31,7 +31,7 @@ Final four-architecture comparison:
 |------------------|:---------:|:----------:|:-----------:|:----------:|:----------:|:--------:|
 | Attention U-Net (baseline) | 0.7554 | 0.8509 | 0.8267 | 0.5886 | 7.94  | 12.24 |
 | ModernAttention  | **0.8055** | **0.8808** | **0.8737** | **0.6620** | 32.78 | 53.87 |
-| SegMamba2        | 0.7496    | 0.8452 | 0.8405 | 0.5630 | **2.34** | 20.89 |
+| SegMamba         | 0.7496    | 0.8452 | 0.8405 | 0.5630 | **2.34** | 20.89 |
 | U-KAN            | 0.7767    | 0.8639 | 0.8579 | 0.6084 | 6.36  | 14.52 |
 
 **Note:** Unless otherwise specified (e.g., the final Tversky ablation step), all models were optimized using a custom combined Dice and Cross-Entropy (Dice+CE) loss function.
